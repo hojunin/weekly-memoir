@@ -32,7 +32,7 @@ const useInput = (options?: Options): ReturnType => {
   }, []);
 
   const onChangeInput = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const targetValue: string = event.target.value || '';
 
       handleString(targetValue);
