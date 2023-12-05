@@ -39,9 +39,9 @@ const Header = () => {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/" legacyBehavior passHref>
+              <Link href="/report" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  뭐하지
+                  보고서
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
