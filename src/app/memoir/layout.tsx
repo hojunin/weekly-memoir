@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import React from 'react';
 
 const MemoirLayout = ({ children }: { children: React.ReactNode }) => {
@@ -6,6 +7,11 @@ const MemoirLayout = ({ children }: { children: React.ReactNode }) => {
       {children}
     </div>
   );
+};
+
+export const metadata: Metadata = {
+  title: '회고하기 | THE WEEKLY',
+  description: '주간 카테고리별 회고',
 };
 
 export default MemoirLayout;
