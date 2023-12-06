@@ -53,6 +53,7 @@ export const fetcher = async <T>({
       ...defaultConfig,
       ...config,
     });
+
     if (response.ok) {
       return await response.json();
     }

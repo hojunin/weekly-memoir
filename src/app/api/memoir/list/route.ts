@@ -19,7 +19,7 @@ export async function GET(request: Request) {
         FROM Memoir
         JOIN public.User ON Memoir.owner = public.User.id
         WHERE Memoir.owner = $1
-        `;
+      `;
 
     if (type) {
       query += ` AND Memoir.type=$2`;

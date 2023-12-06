@@ -1,17 +1,20 @@
 'use client';
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import useInput from '@/hooks/useInput';
 import { Button } from '../ui/button';
 import { createMemoir } from '@/api/actions/memoir';
+import { uploadImage } from '@/api/image';
 
 const MemoirForm = () => {
   const { value: title, onChangeInput: onChangeTitle } = useInput();
   const { value: description, onChangeInput: onChangeDescription } = useInput();
 
   const onClickSubmit = () => {
+    if (!title || !description) return;
+
     createMemoir({
       title,
       description,
@@ -19,6 +22,17 @@ const MemoirForm = () => {
       user_id: 1,
       year_month: '2023-52',
     });
+  };
+
+  const onImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData();
+    formData.append('image', event.target.files[0]);
+
+    try {
+      const response = await uploadImage(formData);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -43,8 +57,8 @@ const MemoirForm = () => {
         onChange={onChangeDescription}
       />
 
-      {/* <Label htmlFor="photo">사진 첨부하기</Label>
-      <Input id="photo" type="file" /> */}
+      <Label htmlFor="photo">사진 첨부하기</Label>
+      <Input id="photo" type="file" accept="image/*" onChange={onImageUpload} />
 
       <Button type="button" onClick={onClickSubmit}>
         작성하기
