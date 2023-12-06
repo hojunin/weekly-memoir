@@ -1,5 +1,5 @@
 'use client';
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, Fragment, useState } from 'react';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
@@ -7,20 +7,39 @@ import useInput from '@/hooks/useInput';
 import { Button } from '../ui/button';
 import { createMemoir } from '@/api/actions/memoir';
 import { useMemoirStore } from '@/store/memoir';
+import { Loader2 } from 'lucide-react';
+import { useToast } from '../ui/use-toast';
 
 const MemoirForm = () => {
   const { value: title, onChangeInput: onChangeTitle } = useInput();
   const { value: description, onChangeInput: onChangeDescription } = useInput();
   const { year_week } = useMemoirStore();
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onClickSubmit = () => {
-    createMemoir({
-      title,
-      description,
-      type: '재무',
-      user_id: 1,
-      year_week,
-    });
+  const onClickSubmit = async () => {
+    try {
+      setIsLoading(true);
+      await createMemoir({
+        title,
+        description,
+        type: '재무',
+        user_id: 1,
+        year_week,
+      });
+
+      toast({
+        title: '회고가 작성되었어요',
+      });
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: '회고 작성에 실패했어요',
+        description: error?.message,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -62,9 +81,16 @@ const MemoirForm = () => {
       <Button
         type="button"
         onClick={onClickSubmit}
-        disabled={!title || !description}
+        disabled={!title || !description || isLoading}
       >
-        작성하기
+        {isLoading ? (
+          <Fragment>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            회고를 작성중이에요
+          </Fragment>
+        ) : (
+          <>작성하기</>
+        )}
       </Button>
     </form>
   );

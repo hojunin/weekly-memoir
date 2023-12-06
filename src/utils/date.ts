@@ -32,5 +32,5 @@ export const getCurrentYear = () => {
 };
 
 export const getCurrentWeek = () => {
-  return '';
+  return '52';
 };
