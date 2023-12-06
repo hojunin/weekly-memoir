@@ -31,7 +31,6 @@ const MemoirList = ({ year_week }: Props) => {
             variant={
               activeCategory?.id === category.id ? 'default' : 'secondary'
             }
-            className="bg-slate-300 dark:text-white dark:bg-slate-600"
             onClick={() => onClickCategory(category)}
           >
             {category.title}
