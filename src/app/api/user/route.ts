@@ -4,16 +4,18 @@ import { NextResponse } from 'next/server';
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('id');
+    const kakao_id = searchParams.get('id');
 
-    const { rows, rowCount } = await sql`
+    const { rows: users, rowCount } = await sql`
       SELECT * FROM public.User
-      WHERE id = ${userId};
+      WHERE kakao_id = ${kakao_id};
     `;
 
     if (rowCount === 0) {
       throw new Error('유저 정보가 없습니다.');
     }
+
+    const targetUser = users[0];
 
     const { rows: categories } = await sql`
       SELECT *
@@ -21,12 +23,12 @@ export async function GET(request: Request) {
       WHERE id in (
         SELECT category_id
         FROM public.user_category 
-        WHERE user_id = ${userId}
+        WHERE user_id = ${targetUser.id}
       );
     `;
 
     return NextResponse.json(
-      { result: { user: rows[0], categories } },
+      { result: { user: targetUser, categories } },
       { status: 200 },
     );
   } catch (error) {

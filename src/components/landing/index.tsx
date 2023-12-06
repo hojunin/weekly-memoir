@@ -29,8 +29,8 @@ const LadingTemplate = ({ title, description, image, index }: Props) => {
       <Image
         src={image}
         alt="랜딩이미지 예시"
-        width="320"
-        height="320"
+        width="480"
+        height="480"
         className="rounded-lg"
       />
     </section>

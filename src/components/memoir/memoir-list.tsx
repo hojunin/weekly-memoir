@@ -1,17 +1,22 @@
+'use client';
 import React from 'react';
-import { fetchMemoirs } from '@/api/memoir';
 import { Button } from '../ui/button';
+import { useUserStore } from '@/store/user';
+import { useMemoirStore } from '@/store/memoir';
+import { Id } from '@/types';
+import { Category } from '@/types/category';
 
 interface Props {
   year_week: string;
 }
 
-const MemoirList = async ({ year_week }: Props) => {
-  const memoirs = await fetchMemoirs(1, year_week);
+const MemoirList = ({ year_week }: Props) => {
+  const { categories } = useUserStore();
+  const { activeCategory, setActiveCategory } = useMemoirStore();
 
-  if (!memoirs) {
-    return <></>;
-  }
+  const onClickCategory = (category: Category) => {
+    setActiveCategory(category);
+  };
 
   return (
     <div className="w-1/4">
@@ -20,12 +25,16 @@ const MemoirList = async ({ year_week }: Props) => {
       </h2>
 
       <ul className="flex flex-col gap-y-4">
-        {memoirs.map((memoir) => (
+        {categories?.map((category) => (
           <Button
-            key={memoir.id}
+            key={category.id}
+            variant={
+              activeCategory?.id === category.id ? 'default' : 'secondary'
+            }
             className="bg-slate-300 dark:text-white dark:bg-slate-600"
+            onClick={() => onClickCategory(category)}
           >
-            {memoir.type}
+            {category.title}
           </Button>
         ))}
       </ul>

@@ -9,8 +9,7 @@ import {
 
 import Link from 'next/link';
 import { DarkMode } from './dark-mode';
-
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import UserAvatar from './user-avatar';
 
 const Header = () => {
   return (
@@ -50,10 +49,7 @@ const Header = () => {
       </div>
 
       <div className="flex gap-x-3 ">
-        <Avatar>
-          <AvatarImage src="https://avatars.githubusercontent.com/u/18079523?v=4" />
-          <AvatarFallback>HJ</AvatarFallback>
-        </Avatar>
+        <UserAvatar />
 
         <DarkMode />
       </div>

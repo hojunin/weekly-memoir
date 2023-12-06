@@ -9,22 +9,25 @@ import { createMemoir } from '@/api/actions/memoir';
 import { useMemoirStore } from '@/store/memoir';
 import { Loader2 } from 'lucide-react';
 import { useToast } from '../ui/use-toast';
+import { useUserStore } from '@/store/user';
 
 const MemoirForm = () => {
   const { value: title, onChangeInput: onChangeTitle } = useInput();
   const { value: description, onChangeInput: onChangeDescription } = useInput();
-  const { year_week } = useMemoirStore();
+  const { activeCategory, year_week } = useMemoirStore();
+  const { user } = useUserStore();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
   const onClickSubmit = async () => {
     try {
+      if (!user || !activeCategory) return;
       setIsLoading(true);
       await createMemoir({
         title,
         description,
-        type: '재무',
-        user_id: 1,
+        type: activeCategory?.id,
+        user_id: user?.id,
         year_week,
       });
 
@@ -56,13 +59,13 @@ const MemoirForm = () => {
   return (
     <form className="flex flex-col w-3/4 gap-y-6">
       <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-        재무
+        {activeCategory?.title}
       </h2>
 
       <Label htmlFor="title">제목</Label>
       <Input
         id="title"
-        placeholder="이번 주의 재무회고"
+        placeholder={`이번 주의 ${activeCategory?.title} 회고!`}
         value={title}
         onChange={onChangeTitle}
       />
@@ -70,7 +73,7 @@ const MemoirForm = () => {
       <Label htmlFor="description">회고록 내용</Label>
       <Textarea
         id="description"
-        placeholder="돈이 너무 없어 야발.."
+        placeholder={activeCategory?.placeholder}
         value={description}
         onChange={onChangeDescription}
       />

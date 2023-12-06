@@ -1,8 +1,8 @@
 'use client';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import WeekSelector from './week-selector';
 import YearSelector from './year-selector';
-import { calcWeeks, getCurrentYear } from '@/utils/date';
+import { calcWeeks } from '@/utils/date';
 import { useMemoirStore } from '@/store/memoir';
 
 const MemoirHeader = () => {
