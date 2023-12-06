@@ -5,3 +5,5 @@ export const UPLOAD_IMAGE = '3/image/';
 
 export const MEMOIR = 'api/memoir';
 export const MEMOIRS = 'api/memoir/list';
+
+export const USER = 'api/user';
