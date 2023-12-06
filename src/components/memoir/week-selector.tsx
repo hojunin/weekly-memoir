@@ -20,8 +20,8 @@ const WeekSelector = ({
         <SelectValue placeholder="2023년 12월" />
       </SelectTrigger>
       <SelectContent>
-        {weeks.map((week) => (
-          <SelectItem key="week" value={week}>
+        {weeks.map((week, index) => (
+          <SelectItem key={`${week}_${index}`} value={week}>
             {week}
           </SelectItem>
         ))}

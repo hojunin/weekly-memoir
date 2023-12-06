@@ -49,11 +49,10 @@ export const fetcher = async <T>({
   config,
 }: FetcherRequest): Promise<T> => {
   try {
-    const response = await fetch(`${BASE_URL}${path}`, {
+    const response = await fetch(`${path}`, {
       ...defaultConfig,
       ...config,
     });
-
     if (response.ok) {
       return await response.json();
     }

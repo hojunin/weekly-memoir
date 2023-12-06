@@ -11,8 +11,18 @@ const MemoirForm = () => {
   const { value: title, onChangeInput: onChangeTitle } = useInput();
   const { value: description, onChangeInput: onChangeDescription } = useInput();
 
+  const onClickSubmit = () => {
+    createMemoir({
+      title,
+      description,
+      type: '재무',
+      user_id: 1,
+      year_month: '2023-52',
+    });
+  };
+
   return (
-    <form className="flex flex-col w-3/4 gap-y-6" action={createMemoir}>
+    <form className="flex flex-col w-3/4 gap-y-6">
       <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
         재무
       </h2>
@@ -36,7 +46,9 @@ const MemoirForm = () => {
       {/* <Label htmlFor="photo">사진 첨부하기</Label>
       <Input id="photo" type="file" /> */}
 
-      <Button>작성하기</Button>
+      <Button type="button" onClick={onClickSubmit}>
+        작성하기
+      </Button>
     </form>
   );
 };
