@@ -17,11 +17,11 @@ const LadingTemplate = ({ title, description, image, index }: Props) => {
       }}
     >
       <div className="flex flex-col gap-y-6">
-        <h2 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+        <h2 className="scroll-m-20 border-b text-3xl font-semibold tracking-tight first:mt-0">
           {title}
         </h2>
 
-        <h3 className="scroll-m-20 border-b text-3xl font-semibold tracking-tight first:mt-0">
+        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
           {description}
         </h3>
       </div>

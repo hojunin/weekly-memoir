@@ -32,9 +32,9 @@ const Header = () => {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/challenge" legacyBehavior passHref>
+              <Link href="/real-time" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  첼린지
+                  실시간 공유
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>

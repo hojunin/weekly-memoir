@@ -6,21 +6,20 @@ import { Textarea } from '../ui/textarea';
 import useInput from '@/hooks/useInput';
 import { Button } from '../ui/button';
 import { createMemoir } from '@/api/actions/memoir';
-import { uploadImage } from '@/api/image';
+import { useMemoirStore } from '@/store/memoir';
 
 const MemoirForm = () => {
   const { value: title, onChangeInput: onChangeTitle } = useInput();
   const { value: description, onChangeInput: onChangeDescription } = useInput();
+  const { year_week } = useMemoirStore();
 
   const onClickSubmit = () => {
-    if (!title || !description) return;
-
     createMemoir({
       title,
       description,
       type: '재무',
       user_id: 1,
-      year_month: '2023-52',
+      year_week,
     });
   };
 
@@ -60,7 +59,11 @@ const MemoirForm = () => {
       <Label htmlFor="photo">사진 첨부하기</Label>
       <Input id="photo" type="file" accept="image/*" onChange={onImageUpload} /> */}
 
-      <Button type="button" onClick={onClickSubmit}>
+      <Button
+        type="button"
+        onClick={onClickSubmit}
+        disabled={!title || !description}
+      >
         작성하기
       </Button>
     </form>

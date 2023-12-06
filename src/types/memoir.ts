@@ -5,7 +5,7 @@ export interface Memoir {
   images: string[];
   createdAt: string;
   type: string;
-  year_month: string;
+  year_week: string;
 }
 
 export interface CreateMemoirEntity {
@@ -13,6 +13,6 @@ export interface CreateMemoirEntity {
   description: string;
   images?: string[];
   type: string;
-  year_month: string;
+  year_week: string;
   user_id: number;
 }
