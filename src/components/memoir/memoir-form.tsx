@@ -25,14 +25,14 @@ const MemoirForm = () => {
   };
 
   const onImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-    const formData = new FormData();
-    formData.append('image', event.target.files[0]);
-
-    try {
-      const response = await uploadImage(formData);
-    } catch (error) {
-      console.error(error);
-    }
+    // const image = event.target.files[0]
+    // const formData = new FormData();
+    // formData.append('image', image);
+    // try {
+    //   const response = await uploadImage(formData);
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   return (
@@ -56,9 +56,9 @@ const MemoirForm = () => {
         value={description}
         onChange={onChangeDescription}
       />
-
+      {/* 
       <Label htmlFor="photo">사진 첨부하기</Label>
-      <Input id="photo" type="file" accept="image/*" onChange={onImageUpload} />
+      <Input id="photo" type="file" accept="image/*" onChange={onImageUpload} /> */}
 
       <Button type="button" onClick={onClickSubmit}>
         작성하기
