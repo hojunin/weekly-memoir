@@ -29,11 +29,11 @@ export async function POST(request: Request) {
   try {
     await sql`INSERT INTO Memoir (
       title, description, year_week, type, owner) 
-      VALUES (${body.title}, ${body.description}, ${body.year_month}, ${body.type} , ${body.user_id});`;
+      VALUES (${body.title}, ${body.description}, ${body.year_week}, ${body.type} , ${body.user_id});`;
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }
 
-  const pets = await sql`SELECT * FROM Memoir;`;
-  return NextResponse.json({ pets }, { status: 200 });
+  const memoirs = await sql`SELECT * FROM Memoir;`;
+  return NextResponse.json({ memoirs }, { status: 200 });
 }
