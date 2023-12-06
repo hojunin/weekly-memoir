@@ -6,13 +6,17 @@ import { useEffect } from 'react';
 const useLogin = () => {
   const { updateStatus, updateUser, updateCategories } = useUserStore();
   const { data: kakao, status } = useSession();
-  console.log('🚀 ~ file: useLogin.ts:9 ~ useLogin ~ kakao:', kakao);
 
   useEffect(() => {
     if (status === 'authenticated') {
       updateStatus(true);
       initializeUser();
       return;
+    }
+    if (status === 'unauthenticated') {
+      updateStatus(false);
+      updateCategories(null);
+      updateUser(null);
     }
   }, [status]);
 
