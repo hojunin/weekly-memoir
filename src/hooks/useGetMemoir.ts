@@ -12,11 +12,6 @@ const useGetMemoir = () => {
     (memoir) => memoir.type.id === activeCategory?.id,
   );
 
-  console.log(
-    '🚀 ~ file: useGetMemoir.ts:12 ~ useGetMemoir ~ targetMemoir:',
-    targetMemoir,
-  );
-
   return targetMemoir;
 };
 

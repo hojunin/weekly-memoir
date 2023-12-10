@@ -1,5 +1,5 @@
 'use client';
-import React, { ChangeEvent, Fragment, useState } from 'react';
+import React, { ChangeEvent, Fragment, useEffect, useState } from 'react';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
@@ -11,12 +11,20 @@ import { Loader2 } from 'lucide-react';
 import { useToast } from '../ui/use-toast';
 import { useUserStore } from '@/store/user';
 import useGetMemoir from '@/hooks/useGetMemoir';
+import { useQueryClient } from '@tanstack/react-query';
+import { MEMOIRS } from '@/api/path';
 
 const MemoirForm = () => {
   const { activeCategory, year_week } = useMemoirStore();
   const { user } = useUserStore();
   const { toast } = useToast();
   const memoirData = useGetMemoir();
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    resetInputs();
+  }, [memoirData]);
+
   const {
     value: title,
     onChangeInput: onChangeTitle,
@@ -33,6 +41,11 @@ const MemoirForm = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const resetInputs = () => {
+    resetTitle();
+    resetDescription();
+  };
 
   const onClickSubmit = async () => {
     try {
@@ -51,8 +64,10 @@ const MemoirForm = () => {
         year_week,
       });
 
-      resetTitle();
-      resetDescription();
+      resetInputs();
+      queryClient.invalidateQueries({
+        queryKey: [MEMOIRS, year_week],
+      });
 
       toast({
         title: '회고가 작성되었어요',
@@ -115,7 +130,7 @@ const MemoirForm = () => {
             회고를 작성중이에요
           </Fragment>
         ) : (
-          <>작성하기</>
+          <>{memoirData ? '수정하기' : '작성하기'}</>
         )}
       </Button>
     </form>

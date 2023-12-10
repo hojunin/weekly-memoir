@@ -54,7 +54,9 @@ const MemoirList = ({}: Props) => {
           ))}
         </ul>
       ) : (
-        <Loader2 />
+        <div className="flex w-full h-20 items-center justify-center">
+          <Loader className="mr-2 h-8 w-8 animate-spin" />
+        </div>
       )}
 
       <CategoryAddButton />
