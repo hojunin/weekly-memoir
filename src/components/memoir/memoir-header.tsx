@@ -10,7 +10,7 @@ const MemoirHeader = () => {
   const [year, week] = year_week.split('-');
 
   const updateYear = useCallback((targetYear: string) => {
-    updateYearWeek(`${targetYear}-${week}`);
+    updateYearWeek(`${targetYear}-${1}`);
   }, []);
 
   const updateWeek = useCallback((targetWeek: string) => {
