@@ -14,7 +14,8 @@ const MemoirHeader = () => {
   }, []);
 
   const updateWeek = useCallback((targetWeek: string) => {
-    updateYearWeek(`${year}-${week}`);
+    const [convertedWeek, ..._] = targetWeek.split('주차');
+    updateYearWeek(`${year}-${convertedWeek}`);
   }, []);
 
   return (
@@ -26,7 +27,11 @@ const MemoirHeader = () => {
 
         <div className="flex gap-x-4 mt-6">
           <YearSelector onValueChange={updateYear} />
-          <WeekSelector weeks={calcWeeks(year)} onValueChange={updateWeek} />
+          <WeekSelector
+            year={year}
+            weeks={calcWeeks(year)}
+            onValueChange={updateWeek}
+          />
         </div>
       </div>
     </div>

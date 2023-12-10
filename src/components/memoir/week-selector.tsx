@@ -8,20 +8,29 @@ import {
 } from '@/components/ui/select';
 
 const WeekSelector = ({
+  year,
   weeks,
   onValueChange,
 }: {
+  year: string;
   weeks: string[];
   onValueChange: (value: string) => void;
 }) => {
   return (
     <Select onValueChange={onValueChange}>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="2023년 12월" />
+      <SelectTrigger className="min-w-fit">
+        <SelectValue
+          placeholder="주차를 선택해주세요"
+          defaultValue={weeks[0]}
+        />
       </SelectTrigger>
       <SelectContent>
         {weeks.map((week, index) => (
-          <SelectItem key={`${week}_${index}`} value={week}>
+          <SelectItem
+            key={`${year}_${week}_${index}`}
+            value={week}
+            defaultValue={weeks[0]}
+          >
             {week}
           </SelectItem>
         ))}

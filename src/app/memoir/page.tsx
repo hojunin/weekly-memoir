@@ -8,7 +8,7 @@ const Memoir = () => {
     <div className="w-2/3">
       <MemoirHeader />
       <div className="flex gap-x-6">
-        <MemoirList year_week="2023-52" />
+        <MemoirList />
         <MemoirForm />
       </div>
     </div>

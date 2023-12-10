@@ -15,7 +15,7 @@ const YearSelector = ({
   return (
     <Select onValueChange={onValueChange}>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="2023" />
+        <SelectValue placeholder="연도를 선택해주세요" defaultValue={'2023'} />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="2023">2023</SelectItem>

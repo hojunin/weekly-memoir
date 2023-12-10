@@ -1,21 +1,33 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '../ui/button';
 import { useUserStore } from '@/store/user';
 import { useMemoirStore } from '@/store/memoir';
-import { Id } from '@/types';
 import { Category } from '@/types/category';
+import CategoryAddButton from './category-add-button';
+import { useFetchMemoir } from '@/hooks/react-query/useMemoir';
+import { BadgeCheck, Loader, Loader2 } from 'lucide-react';
+import { Id } from '@/types';
 
-interface Props {
-  year_week: string;
-}
+interface Props {}
 
-const MemoirList = ({ year_week }: Props) => {
+const MemoirList = ({}: Props) => {
   const { categories } = useUserStore();
-  const { activeCategory, setActiveCategory } = useMemoirStore();
+  const { activeCategory, setActiveCategory, year_week } = useMemoirStore();
+  const memoirs = useFetchMemoir(year_week);
+
+  useEffect(() => {
+    if (Array.isArray(categories) && categories.length > 0) {
+      setActiveCategory(categories[0]);
+    }
+  }, [categories]);
 
   const onClickCategory = (category: Category) => {
     setActiveCategory(category);
+  };
+
+  const isDone = (categoryId: Id) => {
+    return !!memoirs?.find((memoir) => memoir.type.id === categoryId);
   };
 
   return (
@@ -24,23 +36,28 @@ const MemoirList = ({ year_week }: Props) => {
         작성할 회고
       </h2>
 
-      <ul className="flex flex-col gap-y-4">
-        {categories?.map((category) => (
-          <Button
-            key={category.id}
-            variant={
-              activeCategory?.id === category.id ? 'default' : 'secondary'
-            }
-            onClick={() => onClickCategory(category)}
-          >
-            {category.title}
-          </Button>
-        ))}
-      </ul>
+      {Array.isArray(categories) ? (
+        <ul className="flex flex-col gap-y-4">
+          {categories?.map((category) => (
+            <Button
+              key={category.id}
+              variant={
+                activeCategory?.id === category.id ? 'default' : 'secondary'
+              }
+              onClick={() => onClickCategory(category)}
+            >
+              {category.title}
+              {isDone(category.id) && (
+                <BadgeCheck color="#32cd32" className="ml-2" />
+              )}
+            </Button>
+          ))}
+        </ul>
+      ) : (
+        <Loader2 />
+      )}
 
-      <Button variant={'ghost'} className="mt-4">
-        + 카테고리 추가하기
-      </Button>
+      <CategoryAddButton />
     </div>
   );
 };

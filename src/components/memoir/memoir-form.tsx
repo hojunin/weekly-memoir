@@ -10,18 +10,38 @@ import { useMemoirStore } from '@/store/memoir';
 import { Loader2 } from 'lucide-react';
 import { useToast } from '../ui/use-toast';
 import { useUserStore } from '@/store/user';
+import useGetMemoir from '@/hooks/useGetMemoir';
 
 const MemoirForm = () => {
-  const { value: title, onChangeInput: onChangeTitle } = useInput();
-  const { value: description, onChangeInput: onChangeDescription } = useInput();
   const { activeCategory, year_week } = useMemoirStore();
   const { user } = useUserStore();
   const { toast } = useToast();
+  const memoirData = useGetMemoir();
+  const {
+    value: title,
+    onChangeInput: onChangeTitle,
+    reset: resetTitle,
+  } = useInput({
+    initialValue: memoirData?.title ?? '',
+  });
+  const {
+    value: description,
+    onChangeInput: onChangeDescription,
+    reset: resetDescription,
+  } = useInput({
+    initialValue: memoirData?.description ?? '',
+  });
+
   const [isLoading, setIsLoading] = useState(false);
 
   const onClickSubmit = async () => {
     try {
-      if (!user || !activeCategory) return;
+      if (!user) {
+        throw Error('로그인이 필요해요');
+      }
+      if (!activeCategory) {
+        throw Error('왼쪽 목록에서 카테고리를 선택해주세요');
+      }
       setIsLoading(true);
       await createMemoir({
         title,
@@ -30,6 +50,9 @@ const MemoirForm = () => {
         user_id: user?.id,
         year_week,
       });
+
+      resetTitle();
+      resetDescription();
 
       toast({
         title: '회고가 작성되었어요',

@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import Layout from '@/components/common/layout';
 import { Toaster } from '@/components/ui/toaster';
 import { Analytics } from '@vercel/analytics/react';
+import ReactQueryProviders from '@/api/query-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,8 +28,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Layout>{children}</Layout>
-          <Toaster />
+          <ReactQueryProviders>
+            <Layout>{children}</Layout>
+            <Toaster />
+          </ReactQueryProviders>
         </ThemeProvider>
         <Analytics />
       </body>
