@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Button } from '../ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -35,6 +35,7 @@ const categories = [
   '독서',
   '당류',
   '개발',
+  '총평',
 ];
 
 const CategoryAddButton = () => {
@@ -54,7 +55,7 @@ const CategoryAddButton = () => {
   const onClickAdd = async () => {
     if (userCategories?.find((category) => category.title === value)) {
       toast({
-        title: '이미 추가된 카테고리에요',
+        title: `'${value}'은 이미 추가된 카테고리에요`,
         variant: 'destructive',
       });
       return;
@@ -78,7 +79,7 @@ const CategoryAddButton = () => {
 
       updateCategories([...userCategories, targetCategory]);
       toast({
-        title: '카테고리가 추가되었어요',
+        title: `'${value}' 카테고리가 추가되었어요`,
       });
     }
   };
