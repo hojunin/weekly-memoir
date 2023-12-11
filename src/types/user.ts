@@ -7,6 +7,14 @@ export interface User {
   user_name: string;
   phone_number: string;
   email: string;
-  kakao_id: Nullable<string>;
+  kakao_id: string;
+  thumbnail: string;
+}
+
+export interface CreateUserEntity {
+  user_name: string;
+  // phone_number: string;
+  // email: string;
+  kakao_id: string;
   thumbnail: string;
 }

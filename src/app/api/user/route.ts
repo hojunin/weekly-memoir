@@ -12,7 +12,10 @@ export async function GET(request: Request) {
     `;
 
     if (rowCount === 0) {
-      throw new Error('유저 정보가 없습니다.');
+      return NextResponse.json(
+        { result: { message: '사용자가 존재하지 않습니다.' } },
+        { status: 404 },
+      );
     }
 
     const targetUser = users[0];
@@ -38,16 +41,15 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { user_name, phone_number, email } = await request.json();
+    const { user_name, thumbnail, kakao_id } = await request.json();
 
-    // User 테이블에 데이터 삽입
     const result = await sql`
-      INSERT INTO public.User (user_name, phone_number, email)
-      VALUES (${user_name}, ${phone_number}, ${email})
-      RETURNING id, user_name, phone_number;
+      INSERT INTO public.User (user_name, thumbnail, kakao_id)
+      VALUES (${user_name}, ${thumbnail}, ${kakao_id})
+      RETURNING id, user_name;
     `;
 
-    return NextResponse.json({ user: 'TEST' }, { status: 201 });
+    return NextResponse.json({ user: result.rows[0] }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }

@@ -1,21 +1,18 @@
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { useUserStore } from '@/store/user';
-import { signIn, useSession, signOut } from 'next-auth/react';
 import useLogin from '@/hooks/useLogin';
 
 const UserAvatar = () => {
   const { isLoggedIn, user, updateUser, updateCategories } = useUserStore();
-  useLogin();
+  const { logIn, logOut } = useLogin();
+
   const onClickAvatar = async () => {
     if (isLoggedIn) {
-      // TODO 로그아웃 기능 구현
-
-      updateUser(null);
-      updateCategories(null);
+      logOut();
       return;
     }
-    await signIn('kakao');
+    logIn();
   };
 
   return (
