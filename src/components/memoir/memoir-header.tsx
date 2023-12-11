@@ -10,7 +10,7 @@ const MemoirHeader = () => {
   const [year, week] = year_week.split('-');
 
   const updateYear = useCallback((targetYear: string) => {
-    updateYearWeek(`${targetYear}-${1}`);
+    updateYearWeek(`${targetYear}-1`);
   }, []);
 
   const updateWeek = useCallback((targetWeek: string) => {
@@ -22,7 +22,7 @@ const MemoirHeader = () => {
     <div className="flex flex-col py-10">
       <div className="flex items-center justify-between">
         <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
-          {`${[...year_week.split('-')].join('년 ')} 주차`}
+          {`${[...year_week.split('-')].join('년 ')}주차`}
         </h2>
 
         <div className="flex gap-x-4 mt-6">

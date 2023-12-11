@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
-
+import { Badge } from '@/components/ui/badge';
 import {
   Dialog,
   DialogClose,
@@ -16,7 +16,6 @@ import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import useInput from '@/hooks/useInput';
 import { ScrollArea } from '../ui/scroll-area';
-import { Separator } from '../ui/separator';
 
 const categories = [
   '커리어',
@@ -26,6 +25,8 @@ const categories = [
   '식단',
   '자기개발',
   '독서',
+  '당류',
+  '개발',
 ];
 
 const CategoryAddButton = () => {
@@ -81,7 +82,9 @@ const CategoryAddButton = () => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>회고 주제 추가</DialogTitle>
-          <DialogDescription>회고 주제를 추가해주세요.</DialogDescription>
+          <DialogDescription>
+            회고 주제를 추가해주세요. 아래에서 골라주셔도 좋아요.
+          </DialogDescription>
           <div className="relative flex flex-col py-5 gap-y-3">
             <Label htmlFor="category">카테고리</Label>
             <Input
@@ -91,23 +94,19 @@ const CategoryAddButton = () => {
               onChange={onChangeInput}
             />
 
-            {selectorVisible && searchedCategories.length > 0 && (
-              <ScrollArea
-                className="h-32 w-full rounded-md border p-4"
-                style={{ position: 'absolute', top: '95px' }}
-              >
-                {searchedCategories.map((category) => (
+            <ScrollArea className="h-32 w-full rounded-md border p-4 whitespace-nowrap">
+              <ul className="flex gap-x-2 gap-y-2 flex-wrap overflow-scroll">
+                {categories.map((category) => (
                   <li
                     key={category}
-                    className="list-none hover:opacity-70"
+                    className="list-none cursor-pointer"
                     onClick={() => onClickSelectItem(category)}
                   >
-                    <div className="cursor-pointer text-sm">{category}</div>
-                    <Separator className="my-2" />
+                    <Badge>{category}</Badge>
                   </li>
                 ))}
-              </ScrollArea>
-            )}
+              </ul>
+            </ScrollArea>
           </div>
 
           <DialogFooter className="justify-end">
