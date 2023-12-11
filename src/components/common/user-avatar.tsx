@@ -4,7 +4,7 @@ import { useUserStore } from '@/store/user';
 import useLogin from '@/hooks/useLogin';
 
 const UserAvatar = () => {
-  const { isLoggedIn, user, updateUser, updateCategories } = useUserStore();
+  const { isLoggedIn, user } = useUserStore();
   const { logIn, logOut } = useLogin();
 
   const onClickAvatar = async () => {

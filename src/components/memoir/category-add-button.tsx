@@ -16,6 +16,15 @@ import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import useInput from '@/hooks/useInput';
 import { ScrollArea } from '../ui/scroll-area';
+import {
+  createCategory,
+  linkUserCategory,
+  searchCategory,
+} from '@/api/category';
+import { Category } from '@/types/category';
+import { useUserStore } from '@/store/user';
+import { useQueryClient } from '@tanstack/react-query';
+import { USER } from '@/api/path';
 
 const categories = [
   '커리어',
@@ -31,44 +40,40 @@ const categories = [
 
 const CategoryAddButton = () => {
   const { value, onChangeInput, reset } = useInput();
-  const [selectorVisible, setSelectorVisible] = useState<boolean>(false);
-  const [searchedCategories, setSearchedCategories] = useState<string[]>([]);
-
-  useEffect(() => {
-    if (!value) {
-      setSearchedCategories([]);
-      setSelectorVisible(false);
-      return;
-    }
-    setSelectorVisible(true);
-    setSearchedCategories(filterQuery(value));
-  }, [value]);
-
-  const convertStringToComparable = (string: string) => {
-    return string.toLowerCase().trim();
-  };
-
-  const filterQuery = (query: string) => {
-    const preProcessedQuery = convertStringToComparable(query);
-    if (preProcessedQuery.length <= 0) {
-      return [];
-    }
-    return categories
-      .map((category) => convertStringToComparable(category))
-      .filter((category) => category.includes(preProcessedQuery));
-  };
+  const { user } = useUserStore();
+  const queryClient = useQueryClient();
 
   const onClickSelectItem = (category: string) => {
     onChangeInput({ target: { value: category } });
-
-    setTimeout(() => setSelectorVisible(false), 0);
   };
 
   const onOpenChange = (isOpened: boolean) => {
     if (!isOpened) {
-      setSearchedCategories([]);
-      setSelectorVisible(false);
       reset();
+    }
+  };
+
+  const onClickAdd = async () => {
+    let targetCategory: Category | null = null;
+    const response = await searchCategory(value);
+
+    if (response) {
+      targetCategory = response;
+    } else {
+      const createdCategory = await createCategory({ title: value });
+
+      targetCategory = createdCategory;
+    }
+
+    if (targetCategory) {
+      await linkUserCategory({
+        user_id: user?.id,
+        category_id: targetCategory.id,
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: [USER],
+      });
     }
   };
 
@@ -116,7 +121,12 @@ const CategoryAddButton = () => {
               </Button>
             </DialogClose>
             <DialogClose asChild>
-              <Button type="button" variant="secondary" disabled={!value}>
+              <Button
+                type="button"
+                variant="secondary"
+                disabled={!value}
+                onClick={onClickAdd}
+              >
                 추가
               </Button>
             </DialogClose>
