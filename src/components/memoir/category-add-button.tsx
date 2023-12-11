@@ -23,8 +23,7 @@ import {
 } from '@/api/category';
 import { Category } from '@/types/category';
 import { useUserStore } from '@/store/user';
-import { useQueryClient } from '@tanstack/react-query';
-import { USER } from '@/api/path';
+import { useToast } from '../ui/use-toast';
 
 const categories = [
   '커리어',
@@ -40,9 +39,8 @@ const categories = [
 
 const CategoryAddButton = () => {
   const { value, onChangeInput, reset } = useInput();
-  const { user } = useUserStore();
-  const queryClient = useQueryClient();
-
+  const { user, categories: userCategories, updateCategories } = useUserStore();
+  const { toast } = useToast();
   const onClickSelectItem = (category: string) => {
     onChangeInput({ target: { value: category } });
   };
@@ -54,6 +52,13 @@ const CategoryAddButton = () => {
   };
 
   const onClickAdd = async () => {
+    if (userCategories?.find((category) => category.title === value)) {
+      toast({
+        title: '이미 추가된 카테고리에요',
+        variant: 'destructive',
+      });
+      return;
+    }
     let targetCategory: Category | null = null;
     const response = await searchCategory(value);
 
@@ -65,14 +70,15 @@ const CategoryAddButton = () => {
       targetCategory = createdCategory;
     }
 
-    if (targetCategory) {
+    if (targetCategory && Array.isArray(userCategories)) {
       await linkUserCategory({
         user_id: user?.id,
         category_id: targetCategory.id,
       });
 
-      queryClient.invalidateQueries({
-        queryKey: [USER],
+      updateCategories([...userCategories, targetCategory]);
+      toast({
+        title: '카테고리가 추가되었어요',
       });
     }
   };
