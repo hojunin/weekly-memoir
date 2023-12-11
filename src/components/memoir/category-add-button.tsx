@@ -53,6 +53,14 @@ const CategoryAddButton = () => {
   };
 
   const onClickAdd = async () => {
+    if (userCategories?.length >= 7) {
+      toast({
+        title: '카테고리는 7개까지만 추가하실 수 있어요.',
+        description: '기존 카테고리를 삭제 후 이용해주세요.',
+        variant: 'destructive',
+      });
+      return;
+    }
     if (userCategories?.find((category) => category.title === value)) {
       toast({
         title: `'${value}'은 이미 추가된 카테고리에요`,
