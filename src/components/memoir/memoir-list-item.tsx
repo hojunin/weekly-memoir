@@ -20,7 +20,7 @@ const MemoirListItem = ({
   isActive,
 }: Props) => {
   return (
-    <li className="flex items-center">
+    <li className="flex items-center gap-x-2">
       <Button
         variant={isActive ? 'default' : 'secondary'}
         className="flex-1"
@@ -30,7 +30,10 @@ const MemoirListItem = ({
         {isDone && <BadgeCheck color="#32cd32" className="ml-2" />}
       </Button>
 
-      <MemoirListItemDeleteIcon deleteListItem={onClickDelete} />
+      <MemoirListItemDeleteIcon
+        name={categoryItem.title}
+        deleteListItem={onClickDelete}
+      />
     </li>
   );
 };

@@ -10,19 +10,20 @@ import {
 const WeekSelector = ({
   year,
   weeks,
+  currentWeek,
   onValueChange,
 }: {
   year: string;
   weeks: string[];
+  currentWeek: string;
   onValueChange: (value: string) => void;
 }) => {
   return (
     <Select onValueChange={onValueChange}>
       <SelectTrigger className="min-w-fit">
-        <SelectValue
-          placeholder="주차를 선택해주세요"
-          defaultValue={weeks[0]}
-        />
+        <SelectValue placeholder="주차를 선택해주세요">
+          {weeks[Number(currentWeek) - 1]}
+        </SelectValue>
       </SelectTrigger>
       <SelectContent>
         {weeks.map((week, index) => (

@@ -13,10 +13,13 @@ const MemoirHeader = () => {
     updateYearWeek(`${targetYear}-1`);
   }, []);
 
-  const updateWeek = useCallback((targetWeek: string) => {
-    const [convertedWeek, ..._] = targetWeek.split('주차');
-    updateYearWeek(`${year}-${convertedWeek}`);
-  }, []);
+  const updateWeek = useCallback(
+    (targetWeek: string) => {
+      const [convertedWeek, ..._] = targetWeek.split('주차');
+      updateYearWeek(`${year}-${convertedWeek}`);
+    },
+    [year_week],
+  );
 
   return (
     <div className="flex flex-col py-10">
@@ -26,10 +29,11 @@ const MemoirHeader = () => {
         </h2>
 
         <div className="flex gap-x-4 mt-6">
-          <YearSelector onValueChange={updateYear} />
+          <YearSelector currentYear={year} onValueChange={updateYear} />
           <WeekSelector
             year={year}
             weeks={calcWeeks(year)}
+            currentWeek={week}
             onValueChange={updateWeek}
           />
         </div>

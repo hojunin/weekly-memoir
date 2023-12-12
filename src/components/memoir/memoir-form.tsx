@@ -103,17 +103,23 @@ const MemoirForm = () => {
       <Label htmlFor="title">제목</Label>
       <Input
         id="title"
-        placeholder={`이번 주의 ${activeCategory?.title} 회고!`}
+        placeholder={
+          Boolean(activeCategory)
+            ? `이번 주의 ${activeCategory?.title} 회고!`
+            : '회고 제목'
+        }
         value={title}
         onChange={onChangeTitle}
+        disabled={isLoading}
       />
 
       <Label htmlFor="description">회고록 내용</Label>
       <Textarea
         id="description"
-        placeholder={activeCategory?.placeholder}
+        placeholder={activeCategory?.placeholder ?? '회고 내용'}
         value={description}
         onChange={onChangeDescription}
+        disabled={isLoading}
       />
       {/* 
       <Label htmlFor="photo">사진 첨부하기</Label>

@@ -14,10 +14,11 @@ import { Button } from '../ui/button';
 import { DialogClose } from '@radix-ui/react-dialog';
 
 interface Props {
+  name: string;
   deleteListItem: () => void;
 }
 
-const MemoirListItemDeleteIcon = ({ deleteListItem }: Props) => {
+const MemoirListItemDeleteIcon = ({ name, deleteListItem }: Props) => {
   return (
     <Dialog>
       <DialogTrigger>
@@ -25,10 +26,10 @@ const MemoirListItemDeleteIcon = ({ deleteListItem }: Props) => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>카테고리 삭제 안내</DialogTitle>
+          <DialogTitle>{`'${name}' 카테고리 삭제`}</DialogTitle>
           <DialogDescription>
-            이전 회고는 정상적으로 저장되지만, 다시 이 카테고리를 추가하지 않는
-            이상 더이상 작성하실 수 없어요. 정말 삭제하시겠어요?
+            {`이전 회고는 정상적으로 저장되지만, 다시 '${name}'를 추가하지 않는
+            이상 더이상 작성하실 수 없어요. 정말 삭제하시겠어요?`}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
