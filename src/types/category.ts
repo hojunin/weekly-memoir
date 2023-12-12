@@ -15,3 +15,8 @@ export interface CreateUserCategoryEntity {
   user_id: string;
   category_id: string;
 }
+
+export interface DeleteUserCategoryEntity {
+  user_id: string;
+  category_id: string;
+}

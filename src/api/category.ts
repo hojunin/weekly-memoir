@@ -2,6 +2,7 @@ import {
   Category,
   CreateCategoryEntity,
   CreateUserCategoryEntity,
+  DeleteUserCategoryEntity,
 } from '@/types/category';
 import { HTTP_METHOD_TYPE, fetcher } from './fetchr';
 import { CATEGORY, SEARCH_CATEGORY, USER_CATEGORY } from './path';
@@ -59,6 +60,22 @@ export const linkUserCategory = async (body: CreateUserCategoryEntity) => {
       path: USER_CATEGORY,
       config: {
         method: HTTP_METHOD_TYPE.POST,
+        body: JSON.stringify(body),
+      },
+    });
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const unlinkUserCategory = async (body: DeleteUserCategoryEntity) => {
+  try {
+    const response = await fetcher({
+      path: USER_CATEGORY,
+      config: {
+        method: HTTP_METHOD_TYPE.DELETE,
         body: JSON.stringify(body),
       },
     });

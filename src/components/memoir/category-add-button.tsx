@@ -42,6 +42,7 @@ const CategoryAddButton = () => {
   const { value, onChangeInput, reset } = useInput();
   const { user, categories: userCategories, updateCategories } = useUserStore();
   const { toast } = useToast();
+
   const onClickSelectItem = (category: string) => {
     onChangeInput({ target: { value: category } });
   };
