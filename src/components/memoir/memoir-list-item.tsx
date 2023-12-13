@@ -27,7 +27,7 @@ const MemoirListItem = ({
         onClick={() => onClickItem(categoryItem)}
       >
         {categoryItem.title}
-        {isDone && <BadgeCheck color="#32cd32" className="ml-2" />}
+        {isDone && <BadgeCheck color={'#32cd32'} className="ml-2 " />}
       </Button>
 
       <MemoirListItemDeleteIcon

@@ -1,5 +1,8 @@
 export const IMAGER_URL = 'https://api.imgur.com/';
-export const BASE_URL = 'https://weekly-memoir.vercel.app/';
+export const BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://weekly-memoir.vercel.app/'
+    : 'http://localhost:3000/';
 
 export const UPLOAD_IMAGE = '3/image/';
 
