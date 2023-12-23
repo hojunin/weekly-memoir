@@ -21,10 +21,6 @@ const MemoirForm = () => {
   const memoirData = useGetMemoir();
   const queryClient = useQueryClient();
 
-  useEffect(() => {
-    resetInputs();
-  }, [memoirData]);
-
   const {
     value: title,
     onChangeInput: onChangeTitle,
@@ -66,7 +62,7 @@ const MemoirForm = () => {
 
       resetInputs();
       queryClient.invalidateQueries({
-        queryKey: [MEMOIRS, year_week],
+        queryKey: [MEMOIRS, user.id, year_week],
       });
 
       toast({
