@@ -9,7 +9,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <main>
       <SessionProvider>
         <Header />
-        {children}
+        <div className="min-h-screen">{children}</div>
         <Footer />
       </SessionProvider>
     </main>

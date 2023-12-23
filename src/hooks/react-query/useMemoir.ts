@@ -1,16 +1,22 @@
 import { fetchMemoirs } from '@/api/memoir';
 import { MEMOIRS } from '@/api/path';
 import { useUserStore } from '@/store/user';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const useFetchMemoir = (year_week: string) => {
   const { user } = useUserStore();
-  const { data, isLoading, isError } = useQuery({
-    queryKey: [MEMOIRS, year_week],
+  const { data, error } = useSuspenseQuery({
+    queryKey: [MEMOIRS, user?.id, year_week],
     queryFn: ({ queryKey }) => {
-      return fetchMemoirs(user?.id, queryKey[1]);
+      if (!user?.id) {
+        return null;
+      }
+      return fetchMemoirs(queryKey[1], queryKey[2]);
     },
-    enabled: Boolean(user?.id),
   });
+
+  if (error) {
+    throw error;
+  }
   return data;
 };

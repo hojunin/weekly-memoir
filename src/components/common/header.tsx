@@ -40,7 +40,7 @@ const Header = () => {
             <NavigationMenuItem>
               <Link href="/report" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  보고서
+                  내 보고서
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
