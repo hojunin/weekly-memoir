@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import Layout from '@/components/common/layout';
 import { Toaster } from '@/components/ui/toaster';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import ReactQueryProviders from '@/api/query-provider';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -34,6 +35,7 @@ export default function RootLayout({
           </ReactQueryProviders>
         </ThemeProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
