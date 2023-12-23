@@ -13,6 +13,7 @@ import { useUserStore } from '@/store/user';
 import useGetMemoir from '@/hooks/useGetMemoir';
 import { useQueryClient } from '@tanstack/react-query';
 import { MEMOIRS } from '@/api/path';
+import { isMemoir } from '@/types/typeGuard/memoir';
 
 const MemoirForm = () => {
   const { activeCategory, year_week } = useMemoirStore();
@@ -56,7 +57,7 @@ const MemoirForm = () => {
         throw Error('왼쪽 목록에서 카테고리를 선택해주세요');
       }
       setIsLoading(true);
-      if (!!memoirData) {
+      if (isMemoir(memoirData)) {
         updateMemoir({
           id: memoirData.id,
           title,
@@ -77,7 +78,9 @@ const MemoirForm = () => {
       });
 
       toast({
-        title: !!memoirData ? '회고가 수정되었어요' : '회고가 작성되었어요',
+        title: isMemoir(memoirData)
+          ? '회고가 수정되었어요'
+          : '회고가 작성되었어요',
       });
     } catch (error) {
       toast({
@@ -135,7 +138,14 @@ const MemoirForm = () => {
       <Button
         type="button"
         onClick={onClickSubmit}
-        disabled={!title || !description || isLoading}
+        disabled={
+          !title ||
+          !description ||
+          isLoading ||
+          (isMemoir(memoirData) &&
+            title === memoirData.title &&
+            description === memoirData.description)
+        }
       >
         {isLoading ? (
           <Fragment>
@@ -143,7 +153,7 @@ const MemoirForm = () => {
             회고를 작성중이에요
           </Fragment>
         ) : (
-          <>{memoirData ? '수정하기' : '작성하기'}</>
+          <>{isMemoir(memoirData) ? '수정하기' : '작성하기'}</>
         )}
       </Button>
     </form>
