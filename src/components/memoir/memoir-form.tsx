@@ -5,7 +5,7 @@ import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import useInput from '@/hooks/useInput';
 import { Button } from '../ui/button';
-import { createMemoir } from '@/api/actions/memoir';
+import { createMemoir, updateMemoir } from '@/api/actions/memoir';
 import { useMemoirStore } from '@/store/memoir';
 import { Loader2 } from 'lucide-react';
 import { useToast } from '../ui/use-toast';
@@ -52,21 +52,28 @@ const MemoirForm = () => {
         throw Error('왼쪽 목록에서 카테고리를 선택해주세요');
       }
       setIsLoading(true);
-      await createMemoir({
-        title,
-        description,
-        type: activeCategory?.id,
-        user_id: user?.id,
-        year_week,
-      });
+      if (!!memoirData) {
+        updateMemoir({
+          id: memoirData.id,
+          title,
+          description,
+        });
+      } else {
+        await createMemoir({
+          title,
+          description,
+          type: activeCategory?.id,
+          user_id: user?.id,
+          year_week,
+        });
+      }
 
-      resetInputs();
       queryClient.invalidateQueries({
         queryKey: [MEMOIRS, user.id, year_week],
       });
 
       toast({
-        title: '회고가 작성되었어요',
+        title: !!memoirData ? '회고가 수정되었어요' : '회고가 작성되었어요',
       });
     } catch (error) {
       toast({

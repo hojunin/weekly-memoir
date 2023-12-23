@@ -61,3 +61,21 @@ export async function POST(request: Request) {
   const memoirs = await sql`SELECT * FROM Memoir;`;
   return NextResponse.json({ memoirs }, { status: 200 });
 }
+
+export async function PATCH(request: Request) {
+  const body = await request.json();
+
+  try {
+    const response = await sql`
+      UPDATE public.Memoir 
+      SET 
+        title = ${body.title}, 
+        description = ${body.description}
+      WHERE 
+        id = ${body.id};
+    `;
+    return NextResponse.json({ response }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
+}

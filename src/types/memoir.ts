@@ -19,3 +19,9 @@ export interface CreateMemoirEntity {
   year_week: string;
   user_id: number;
 }
+export interface UpdateMemoirEntity {
+  id: number;
+  title: string;
+  description: string;
+  images?: string[];
+}
