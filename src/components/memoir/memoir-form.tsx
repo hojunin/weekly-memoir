@@ -21,6 +21,10 @@ const MemoirForm = () => {
   const memoirData = useGetMemoir();
   const queryClient = useQueryClient();
 
+  useEffect(() => {
+    resetInputs();
+  }, [memoirData]);
+
   const {
     value: title,
     onChangeInput: onChangeTitle,
