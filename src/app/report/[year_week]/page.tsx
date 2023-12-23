@@ -1,23 +1,23 @@
 import MemoirDetailContent from '@/components/report/detail';
-import { Skeleton } from '@/components/ui/skeleton';
+import ReportSectionSkeleton from '@/components/report/detail/report-section-skeleton';
 import React, { Suspense } from 'react';
 
 const ReportDetail = ({ params }: { params: { year_week: string } }) => {
   return (
-    <div>
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-14">{`${[
+    <div className="mb-20">
+      <h1 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0 mb-8">{`${[
         ...params.year_week.split('-'),
       ].join('년 ')}주차 회고록`}</h1>
 
       <Suspense
         fallback={
           <div className="flex flex-col gap-y-4">
-            <Skeleton className="w-full h-[200px] rounded-xl" />
-            <Skeleton className="w-full h-[200px] rounded-xl" />
-            <Skeleton className="w-full h-[200px] rounded-xl" />
-            <Skeleton className="w-full h-[200px] rounded-xl" />
-            <Skeleton className="w-full h-[200px] rounded-xl" />
-            <Skeleton className="w-full h-[200px] rounded-xl" />
+            <ReportSectionSkeleton />
+            <ReportSectionSkeleton />
+            <ReportSectionSkeleton />
+            <ReportSectionSkeleton />
+            <ReportSectionSkeleton />
+            <ReportSectionSkeleton />
           </div>
         }
       >

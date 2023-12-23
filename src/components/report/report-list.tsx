@@ -35,14 +35,15 @@ const ReportList = ({ data }: Props) => {
         <TableRow>
           <TableHead className="w-[100px]">연도</TableHead>
           <TableHead>주차</TableHead>
-          <TableHead>작성일</TableHead>
-          <TableHead className="text-right">키워드</TableHead>
+          <TableHead>키워드</TableHead>
+          <TableHead className="text-right">작성일</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {data.map((invoice) => (
           <TableRow
             key={invoice.week}
+            className="cursor-pointer"
             onClick={() => onClickItem(`${invoice.year}-${invoice.week}`)}
           >
             <TableCell className="font-medium">{invoice.year}</TableCell>
@@ -52,12 +53,12 @@ const ReportList = ({ data }: Props) => {
           </TableRow>
         ))}
       </TableBody>
-      <TableFooter>
+      {/* <TableFooter>
         <TableRow>
           <TableCell colSpan={3}>Total</TableCell>
           <TableCell className="text-right">$2,500.00</TableCell>
         </TableRow>
-      </TableFooter>
+      </TableFooter> */}
     </Table>
   );
 };
