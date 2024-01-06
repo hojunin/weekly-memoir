@@ -18,7 +18,7 @@ const MemoirHeader = () => {
       const [convertedWeek, ..._] = targetWeek.split('주차');
       updateYearWeek(`${year}-${convertedWeek}`);
     },
-    [year_week],
+    [year],
   );
 
   return (

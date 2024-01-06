@@ -11,7 +11,7 @@ import { Loader2 } from 'lucide-react';
 import { useToast } from '../ui/use-toast';
 import { useUserStore } from '@/store/user';
 import useGetMemoir from '@/hooks/useGetMemoir';
-import { useQueryClient } from '@tanstack/react-query';
+import { useIsFetching, useQueryClient } from '@tanstack/react-query';
 import { MEMOIRS } from '@/api/path';
 import { isMemoir } from '@/types/typeGuard/memoir';
 
@@ -21,8 +21,13 @@ const MemoirForm = () => {
   const { toast } = useToast();
   const memoirData = useGetMemoir();
   const queryClient = useQueryClient();
+  const isFetching = useIsFetching();
 
   useEffect(() => {
+    console.log(
+      '🚀 ~ file: memoir-form.tsx:29 ~ MemoirForm ~ memoirData:',
+      memoirData,
+    );
     resetInputs();
   }, [memoirData]);
 
@@ -144,13 +149,14 @@ const MemoirForm = () => {
           isLoading ||
           (isMemoir(memoirData) &&
             title === memoirData.title &&
-            description === memoirData.description)
+            description === memoirData.description) ||
+          isFetching > 0
         }
       >
         {isLoading ? (
           <Fragment>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            회고를 작성중이에요
+            {`회고를 ${isMemoir(memoirData) ? '수정' : '작성'}중이에요`}
           </Fragment>
         ) : (
           <>{isMemoir(memoirData) ? '수정하기' : '작성하기'}</>

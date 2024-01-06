@@ -10,8 +10,13 @@ export const calcWeeks = (year: string) => {
   const firstDayOfYear = dayjs(`${year}-01-01`);
 
   let firstDayOfFirstWeek = firstDayOfYear;
-  if (firstDayOfYear.day() !== 1) {
-    firstDayOfFirstWeek = firstDayOfYear.subtract(firstDayOfYear.day(), 'day');
+  if (firstDayOfYear.day() === 0) {
+    firstDayOfFirstWeek = firstDayOfYear.add(1, 'day');
+  } else {
+    firstDayOfFirstWeek = firstDayOfYear.subtract(
+      firstDayOfYear.day() - 1,
+      'day',
+    );
   }
 
   for (let i = 1; i <= 52; i++) {
@@ -32,5 +37,10 @@ export const getCurrentYear = () => {
 };
 
 export const getCurrentWeek = () => {
-  return '52';
+  const today = dayjs();
+  const startOfYear = today.startOf('year');
+  const daysDiff = today.diff(startOfYear, 'day');
+  const weekNumber = Math.ceil((daysDiff + startOfYear.day()) / 7);
+
+  return String(weekNumber);
 };

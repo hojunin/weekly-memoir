@@ -21,7 +21,10 @@ const WeekSelector = ({
   return (
     <Select onValueChange={onValueChange}>
       <SelectTrigger className="min-w-fit">
-        <SelectValue placeholder="주차를 선택해주세요">
+        <SelectValue
+          placeholder="주차를 선택해주세요"
+          defaultValue={weeks[Number(currentWeek) - 1]}
+        >
           {weeks[Number(currentWeek) - 1]}
         </SelectValue>
       </SelectTrigger>

@@ -30,7 +30,6 @@ const ReportList = ({ data }: Props) => {
   };
   return (
     <Table>
-      <TableCaption>전체 회고록</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">연도</TableHead>
