@@ -12,6 +12,7 @@ import useLogin from '@/hooks/useLogin';
 import MemoirListItem from './memoir-list-item';
 import { unlinkUserCategory } from '@/api/category';
 import { useToast } from '../ui/use-toast';
+import { Skeleton } from '../ui/skeleton';
 
 interface Props {}
 
@@ -85,8 +86,11 @@ const MemoirList = ({}: Props) => {
           ))}
         </ul>
       ) : (
-        <div className="flex w-full h-20 items-center justify-center">
-          <Loader className="mr-2 h-8 w-8 animate-spin" />
+        <div className="flex flex-col w-full gap-y-2">
+          <Skeleton className="w-full h-12 rounded-md" />
+          <Skeleton className="w-full h-12 rounded-md" />
+          <Skeleton className="w-full h-12 rounded-md" />
+          <Skeleton className="w-full h-12 rounded-md" />
         </div>
       )}
 

@@ -1,5 +1,8 @@
+'use client';
+import YearSelector from '@/components/memoir/year-selector';
 import ReportList from '@/components/report/report-list';
-import React from 'react';
+import { getCurrentYear } from '@/utils/date';
+import React, { useState } from 'react';
 
 const memoirData = [
   {
@@ -125,11 +128,24 @@ const memoirData = [
 ];
 
 const ReportPage = () => {
+  const [currentYear, setCurrentYear] = useState(getCurrentYear());
+  const onChangeYear = (value: string) => {
+    setCurrentYear(value);
+  };
   return (
     <div className="w-2/3 my-0 mx-auto">
-      <h1 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-        리스트
-      </h1>
+      <div className="flex items-center justify-between">
+        <h1 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+          {`${currentYear}년 회고 리스트`}
+        </h1>
+
+        <div className="w-60">
+          <YearSelector
+            currentYear={getCurrentYear()}
+            onValueChange={onChangeYear}
+          />
+        </div>
+      </div>
 
       <ReportList data={memoirData} />
     </div>
