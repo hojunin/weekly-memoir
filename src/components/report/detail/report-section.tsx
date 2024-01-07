@@ -1,5 +1,5 @@
 import { Memoir } from '@/types/memoir';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import {
   Card,
@@ -21,7 +21,15 @@ const ReportSection = ({ memoirData }: Props) => {
         <CardDescription>{memoirData.type.title}</CardDescription>
       </CardHeader>
       <CardContent>
-        <p>{memoirData.description}</p>
+        {memoirData.description.split('\n').map(
+          (chunk, index) =>
+            Boolean(chunk) && (
+              <Fragment key={`${chunk}_${index}`}>
+                <br />
+                <p>{chunk}</p>
+              </Fragment>
+            ),
+        )}
       </CardContent>
     </Card>
   );

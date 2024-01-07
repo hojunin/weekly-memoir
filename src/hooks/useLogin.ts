@@ -8,15 +8,17 @@ const useLogin = () => {
   const { data: kakao, status } = useSession();
 
   useEffect(() => {
-    if (status === 'authenticated') {
-      initializeUser();
-      return;
-    }
-    if (status === 'unauthenticated') {
-      updateStatus(false);
-      updateCategories(null);
-      updateUser(null);
-    }
+    try {
+      if (status === 'authenticated') {
+        initializeUser();
+        return;
+      }
+      if (status === 'unauthenticated') {
+        updateStatus(false);
+        updateCategories(null);
+        updateUser(null);
+      }
+    } catch (error) {}
   }, [status]);
 
   const initializeUser = async () => {
@@ -30,7 +32,7 @@ const useLogin = () => {
         updateCategories(categories);
       }
     } catch (error) {
-      if (error.status === 404) {
+      if (error?.status === 404) {
         const response = await signUp();
         if (response) {
           initializeUser();
