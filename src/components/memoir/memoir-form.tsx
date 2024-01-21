@@ -24,10 +24,6 @@ const MemoirForm = () => {
   const isFetching = useIsFetching();
 
   useEffect(() => {
-    console.log(
-      '🚀 ~ file: memoir-form.tsx:29 ~ MemoirForm ~ memoirData:',
-      memoirData,
-    );
     resetInputs();
   }, [memoirData]);
 
@@ -110,7 +106,7 @@ const MemoirForm = () => {
   };
 
   return (
-    <form className="flex flex-col w-3/4 gap-y-6">
+    <form className="flex flex-col w-3/4 gap-y-6 mb-20">
       <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
         {activeCategory?.title}
       </h2>
@@ -135,6 +131,7 @@ const MemoirForm = () => {
         value={description}
         onChange={onChangeDescription}
         disabled={isLoading}
+        className="h-48"
       />
       {/* 
       <Label htmlFor="photo">사진 첨부하기</Label>
