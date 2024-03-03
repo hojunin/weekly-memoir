@@ -106,7 +106,10 @@ const MemoirForm = () => {
   };
 
   return (
-    <form className="flex flex-col w-3/4 gap-y-6 mb-20">
+    <form
+      className="flex flex-col w-3/4 gap-y-6 mb-20"
+      key={activeCategory?.id}
+    >
       <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
         {activeCategory?.title}
       </h2>

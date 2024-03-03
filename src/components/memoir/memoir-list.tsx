@@ -6,7 +6,6 @@ import { useMemoirStore } from '@/store/memoir';
 import { Category } from '@/types/category';
 import CategoryAddButton from './category-add-button';
 import { useFetchMemoir } from '@/hooks/react-query/useMemoir';
-import { Loader } from 'lucide-react';
 import { Id } from '@/types';
 import useLogin from '@/hooks/useLogin';
 import MemoirListItem from './memoir-list-item';

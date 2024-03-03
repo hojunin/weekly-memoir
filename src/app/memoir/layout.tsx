@@ -15,3 +15,5 @@ export const metadata: Metadata = {
 };
 
 export default MemoirLayout;
+
+export const dynamic = 'error';
