@@ -16,7 +16,7 @@ import { Skeleton } from '../ui/skeleton';
 interface Props {}
 
 const MemoirList = ({}: Props) => {
-  const { user, isLoggedIn, categories, updateCategories } = useUserStore();
+  const { user, categories, updateCategories } = useUserStore();
   const { activeCategory, year_week, setActiveCategory } = useMemoirStore();
   const { logIn } = useLogin();
   const { toast } = useToast();
@@ -61,7 +61,7 @@ const MemoirList = ({}: Props) => {
     }
   };
 
-  if (!isLoggedIn) {
+  if (!user) {
     return <Button onClick={logIn}>로그인하고 회고 작성하기</Button>;
   }
 

@@ -4,11 +4,11 @@ import { useUserStore } from '@/store/user';
 import useLogin from '@/hooks/useLogin';
 
 const UserAvatar = () => {
-  const { isLoggedIn, user } = useUserStore();
+  const { user } = useUserStore();
   const { logIn, logOut } = useLogin();
 
   const onClickAvatar = async () => {
-    if (isLoggedIn) {
+    if (user) {
       logOut();
       return;
     }
@@ -17,7 +17,7 @@ const UserAvatar = () => {
 
   return (
     <Avatar className="cursor-pointer" onClick={onClickAvatar}>
-      {isLoggedIn && <AvatarImage src={user?.thumbnail} />}
+      {user && <AvatarImage src={user?.thumbnail} />}
       <AvatarFallback>HJ</AvatarFallback>
     </Avatar>
   );

@@ -1,28 +1,33 @@
 import { createUser, fetchUser } from '@/api/user';
 import { useUserStore } from '@/store/user';
 import { signIn, useSession, signOut } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const useLogin = () => {
-  const { updateStatus, updateUser, updateCategories } = useUserStore();
+  const [isInitialized, setIsInitialized] = useState(false);
+  const { updateUser, updateCategories } = useUserStore();
   const { data: kakao, status } = useSession();
 
   useEffect(() => {
+    if (isInitialized) {
+      return;
+    }
     try {
       if (status === 'authenticated') {
         initializeUser();
         return;
       }
       if (status === 'unauthenticated') {
-        updateStatus(false);
         updateCategories(null);
         updateUser(null);
       }
-    } catch (error) {}
-  }, [status]);
+    } catch (error) {
+    } finally {
+      setIsInitialized(true);
+    }
+  }, [status, isInitialized]);
 
   const initializeUser = async () => {
-    updateStatus(true);
     try {
       const response = await fetchUser(kakao?.user?.id);
 
